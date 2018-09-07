@@ -1,0 +1,22 @@
+.des-bootContainer{
+    width:100%;
+    height:100%;
+    display: flex;
+    //左边菜单
+    .leftBar{
+        width:300px;
+        background: red;
+    }
+    //右边内容
+    .rightContent{
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        //右边滚动内容
+        .righContent-scroll{
+            padding-top:30px;
+            flex:1;
+            overflow-y: auto;
+        }
+    }
+}
