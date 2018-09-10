@@ -6,6 +6,15 @@ import router from './router'
 //vuex
 import store from './store';
 Vue.config.productionTip = false
+
+//全局注册验证
+import RegExp from "./util/RegExp.js";
+Vue.prototype.RegExp=RegExp;
+
+//列表loading
+import listLoadingCom from "./components/listLoading";
+Vue.use(listLoadingCom);
+
 import 'vuetify/dist/vuetify.min.css';
 import Vuetify from 'vuetify';
 Vue.use(Vuetify)

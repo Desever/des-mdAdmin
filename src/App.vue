@@ -1,24 +1,34 @@
 <template>
 	<div id="app">
-		<router-view/>
+		<transition name="slide-x-reverse-transition">
+			<router-view/>
+		</transition>
+		<pageLoading :showLoading="showWindowLoading"></pageLoading>
 	</div>
 </template>
 
 <script>
+	//引入全局加载组件
+	import pageLoading from "./components/pageLoading/pageLoading.vue";
 	//注册组件
 	import Vue from 'vue';
-	import DlInput from './components/input';
-	Vue.use(DlInput)
 	export default {
 		name: 'App',
-		mounted: function(){
-        }
+		computed:{
+		    showWindowLoading(){
+		        return this.$store.state.app.windowLoading;
+		    }
+	  	},
+	  	components:{
+	  		pageLoading
+	  	},
+	  	created(){
+	  	}
 	}
 </script>
 
 <style>
 	/*引入动画*/
-	@import "./assets/css/animate.min.css";
 	body,
 	html {
 		width: 100%;
@@ -35,9 +45,5 @@
 		height: 100%;
 		overflow: hidden;
 		position: relative;
-	}
-	
-	.v-text-field__details{
-		display: none;
 	}
 </style>

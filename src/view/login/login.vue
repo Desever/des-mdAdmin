@@ -3,23 +3,17 @@
 		<v-content>
 			<v-container fluid fill-height>
 				<v-layout align-center justify-center>
+
 					<v-flex xs12 sm8 md4>
 						<v-card class="elevation-12">
 							<v-toolbar dark color="primary">
 								<v-toolbar-title>欢迎使用</v-toolbar-title>
 							</v-toolbar>
 							<v-card-text>
-								<d-form :model="formData" :rules="rules" ref="form">
-									<form-item prop="phone">
-										<!--<v-text-field  prepend-icon="person" label="用户名" type="text"></v-text-field>-->
-										<DlInput 
-											v-model.trim="formData.phone"
-										></DlInput>
-									</form-item>
-									<form-item prop="password">
-										<v-text-field v-model.trim="formData.password" prepend-icon="https" label="密码" type="text"></v-text-field>
-									</form-item>
-								</d-form>
+								<v-form ref="loginForm">
+									<v-text-field v-model.trim="loginData.phone" prepend-icon="person" label="手机号" required :rules="phoneRules" type="text"></v-text-field>
+									<v-text-field v-model.trim="loginData.password" prepend-icon="lock" label="密码" required :rules="passwordRules" type="password"></v-text-field>
+								</v-form>
 							</v-card-text>
 							<v-card-actions>
 								<v-spacer></v-spacer>
@@ -27,6 +21,7 @@
 							</v-card-actions>
 						</v-card>
 					</v-flex>
+
 				</v-layout>
 			</v-container>
 		</v-content>
@@ -34,46 +29,36 @@
 </template>
 
 <script>
-	import { DForm, FormItem } from '../../components/Form'
 	export default {
 		data() {
 			return {
-				formData: {
-					phone: '123123',
-					password:''
+				loginData: {
+					phone: "",
+					password: ""
 				},
-				rules: {
-					phone: [
-						{
-							pattern: /^1[34578]\d{9}$/,
-							message: '您的手机号码输入错误',
-							trigger: 'blur'
-						},
-						{
-							required: true,
-							message: '您的手机号码未输入',
-							trigger: 'blur'
-						}
-					],
-					password: [
-						{
-							required: true,
-							message: '您的密码未输入'
-						}
-					]
-				}
+
+				//手机号数据验证
+				phoneRules: [
+					v => !!v || '手机号不能为空',
+					v => this.RegExp.checkPhone.test(v) || '手机号格式错误'
+				],
+
+				//密码数据验证
+				passwordRules: [
+					v => !!v || '密码不能为空',
+					v => this.RegExp.password.test(v) || '密码格式错误'
+				]
+
 			}
 		},
 		methods: {
 			handleSubmit() {
-				this.$refs.form.validate(errs => {
-					console.log(errs)
-				})
+				if(this.$refs.loginForm.validate()) {
+					//vuex登录
+					this.$store.dispatch("acLogin", this.loginData);
+				}
 			}
 		},
-		components: {
-			DForm,
-			FormItem
-		}
+		components: {}
 	}
 </script>

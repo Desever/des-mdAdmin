@@ -23,8 +23,11 @@
 			        </v-avatar>
 				</div>
 				<v-list>
-					<v-list-tile v-for="(item, index) in items" :key="index" @click="">
-						<v-list-tile-title>{{ item.title }}</v-list-tile-title>
+					<v-list-tile @click="">
+						<v-list-tile-title>个人中心</v-list-tile-title>
+					</v-list-tile>
+					<v-list-tile @click="loginOut">
+						<v-list-tile-title>退出登录</v-list-tile-title>
 					</v-list-tile>
 				</v-list>
 			</v-menu>
@@ -37,24 +40,18 @@
 	export default {
 		name: 'navBar',
 		data: () => ({
-			items: [{
-					title: 'Click Me'
-				},
-				{
-					title: 'Click Me'
-				},
-				{
-					title: 'Click Me'
-				},
-				{
-					title: 'Click Me 2'
-				}
-			]
 		}),
 		created() {},
 		methods: {
+			/**
+			 *侧边栏 
+			 */
 			changeDrawer() {
 				this.$store.dispatch("acChangeDrawer");
+			},
+			//退出登录
+			loginOut(){
+  				this.$store.dispatch("acOutLogin");
 			}
 		}
 	}
