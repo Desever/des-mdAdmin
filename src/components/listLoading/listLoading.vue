@@ -1,29 +1,41 @@
 <template>
 	<div class="list-loading-box" v-if="showLoading">
 		<div class="loadingInfo">
-
-			<svg version="1.1" id="L2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-				<circle fill="none" stroke="#fff" stroke-width="4" stroke-miterlimit="10" cx="50" cy="50" r="48"></circle>
-				<line fill="none" stroke-linecap="round" stroke="#fff" stroke-width="4" stroke-miterlimit="10" x1="50" y1="50" x2="85" y2="50.5" transform="rotate(347.832 50 50)">
-					<animateTransform attributeName="transform" dur="1s" type="rotate" from="0 50 50" to="360 50 50" repeatCount="indefinite"></animateTransform>
-				</line>
-				<line fill="none" stroke-linecap="round" stroke="#fff" stroke-width="4" stroke-miterlimit="10" x1="50" y1="50" x2="49.5" y2="74" transform="rotate(22.3776 50 50)">
-					<animateTransform attributeName="transform" dur="10s" type="rotate" from="0 50 50" to="360 50 50" repeatCount="indefinite"></animateTransform>
-				</line>
-			</svg>
-
-			<!--<span>加载中</span>-->
+			<lottie 
+				:options="defaultOptions" 
+				:height="100" 
+				:width="100" 
+				v-on:animCreated="handleAnimation" />
 		</div>
 	</div>
 </template>
 <script>
+	import Lottie from 'vue-lottie';
+	import * as animationData from '../lottieJson/a_simple_sun_day.json'
 	export default {
 		name: "listLoading",
 		props: ["showLoading"],
 		data() {
-			return {}
+			return {
+				defaultOptions: {
+					animationData: animationData
+				},
+				animationSpeed:1,
+				anim: {}
+			}
 		},
-		mounted() {}
+		components:{
+			Lottie
+		},
+		methods:{
+			handleAnimation(anim){
+				this.anim = anim
+			},
+			// 停止动画
+			stop() {
+				this.anim.stop()
+			}
+		}
 	}
 </script>
 
@@ -39,21 +51,11 @@
 		align-items: center;
 		justify-content: center;
 		.loadingInfo {
-			background:#1565c0!important;
 			padding: 10px 30px;
 			border-radius: 4px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			svg{
-			    width:30px;
-			    height:30px;
-			}
-			span {
-				display: block;
-				padding-left: 10px;
-				color:#fff;
-			}
 		}
 	}
 </style>
